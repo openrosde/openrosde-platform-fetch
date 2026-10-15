@@ -1,0 +1,3 @@
+# Launch files of simulations that a script of 'ci/' may start with 'roslaunch', which 'gitlab-ci/check-no-motion.bash' of the core reads, one file name per line.
+# 'ci/check-rosbridge.bash' starts the Fetch in Gazebo alone, with 'rosbridge' and the relay, in a container without network.
+fetch_rosbridge_check.launch

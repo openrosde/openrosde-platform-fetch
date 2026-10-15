@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+  <!-- OpenRoSDE-specific: the Fetch in Gazebo without a GUI, 'rosbridge', and the end effector relay, which 'ci/check-rosbridge.bash' starts in a container without network, for the CI only. -->
+
+  <!-- Start the Fetch in an empty world of Gazebo, with 'gzserver' alone and no 'gzclient'. -->
+  <include file="$(find fetch_gazebo)/launch/simulation.launch">
+    <arg name="gui" value="false" />
+    <arg name="headless" value="true" />
+  </include>
+
+  <!-- Start 'rosbridge' on port 9090, as every 'tmux' session of OpenRoSDE does. -->
+  <include file="$(find openrosde_launch)/launch/rosbridge_server_default.launch" />
+
+  <!-- Start the relay of end effector twist commands, as the panes of the platform do. -->
+  <include file="$(find openrosde_fetch_launch)/launch/fetch_teleop_default.launch" />
+
+</launch>

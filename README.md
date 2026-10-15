@@ -86,6 +86,13 @@ Update the platform with `git -C extensions/openrosde-platform-fetch pull`, then
 The CI of the core of OpenRoSDE tests this platform at the commit that `gitlab-ci/extensions.repos` of the core pins: it builds or reuses the image `registry.gitlab.com/coarobo/sde/fetch-devel`, builds the Catkin workspaces in it, and checks every launch entry point of the panes.
 It publishes the image as `dev` or `main` from those branches of the core, and under the tag of a release of the core, such as `v3.0.0`.
 
+In the container of every setup of the Fetch, with no network, `ci/check-in-container.bash` runs `ci/check-rosbridge.bash`, which reaches the Fetch through `rosbridge` alone, as a teleoperation application does:
+
+- It starts the Fetch in Gazebo without a GUI, `rosbridge` on port `9090` as `openrosde_launch:rosbridge_server_default.launch` starts it, and the relay of `fetch_teleop_default.launch`, with `ci/fetch_rosbridge_check.launch`.
+- The WebSocket client `ci/check-rosbridge.py` checks `/clock`, `/joint_states`, `/tf`, and `/tf_static`.
+- The client then publishes a `geometry_msgs/TwistStamped` on `fetch_ee_cmd_vel` and checks that the relay forwards it, clamped, to `/arm_controller/cartesian_twist/command` of the simulated arm, then sends zeros once the commands stop.
+- `ci/allowed-simulation-launches.txt` names the launch file, so that `gitlab-ci/check-no-motion.bash` of the core allows it.
+
 `.gitlab-ci.yml` of this repository triggers a pipeline of the core on `dev` for every change, with `OPENROSDE_CI_EXTENSION_OVERRIDE` set to this project, its branch, and its commit, so that the core tests only the setups that run this platform, at that commit, and publishes nothing.
 
 ## 🐛 Reporting Issues
