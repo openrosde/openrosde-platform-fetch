@@ -1,0 +1,5 @@
+[submodule "ros/fetch_catkin_ws/src/fetch_gazebo"]
+	path = ros/fetch_catkin_ws/src/fetch_gazebo
+	url = https://github.com/fetchrobotics/fetch_gazebo.git
+	branch = gazebo11
+	ignore = dirty
