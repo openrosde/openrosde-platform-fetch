@@ -3,10 +3,10 @@
 <launch>
 
   <!-- OpenRoSDE-specific launch: main entry point for Fetch end effector teleoperation. -->
-  <!-- It starts the Fetch Cartesian twist relay so teleoperation is live on launch with no manual controller switch. -->
-  <!-- Publish geometry_msgs/TwistStamped end effector velocity commands on 'fetch_ee_cmd_vel' (for example from the Coarobo Sightline application) to move the arm. -->
+  <!-- It starts the Fetch Cartesian twist relay, which forwards end effector twist commands to the Fetch native Cartesian twist controller ('arm_controller/cartesian_twist'), so teleoperation is live on launch with no manual controller switch. -->
+  <!-- Publish geometry_msgs/TwistStamped end effector velocity commands on 'fetch_ee_cmd_vel' (for example from a teleoperation application) to move the arm. -->
 
-  <!-- Input end effector twist command (geometry_msgs/TwistStamped), as published by the Quest application. -->
+  <!-- Input end effector twist command (geometry_msgs/TwistStamped), as published by the teleoperation application. -->
   <arg name="input_twist_topic" default="fetch_ee_cmd_vel" />
   <!-- Output command topic consumed by the Fetch Cartesian twist controller. -->
   <arg name="command_out_topic" default="/arm_controller/cartesian_twist/command" />
@@ -22,7 +22,14 @@
   <arg name="max_linear_velocity" default="0.05" />
   <arg name="max_angular_velocity" default="0.10" />
 
-  <!-- 'pass_all_args' forwards every arg declared above to the Coarobo Sightline teleop launch, so a new parameter only needs to be added in one place. -->
-  <include file="$(find openrosde_fetch_teleop)/launch/fetch_teleop_sightline.launch" pass_all_args="true" />
+  <!-- Start the relay with every arg declared above as a parameter. -->
+  <node pkg="openrosde_fetch_teleop" type="fetch_cartesian_twist_control.py" name="fetch_cartesian_twist_control" output="screen">
+    <param name="input_twist_topic" value="$(arg input_twist_topic)" />
+    <param name="command_out_topic" value="$(arg command_out_topic)" />
+    <param name="start_in_velocity_control" value="$(arg start_in_velocity_control)" />
+    <param name="send_period" value="$(arg send_period)" />
+    <param name="max_linear_velocity" value="$(arg max_linear_velocity)" />
+    <param name="max_angular_velocity" value="$(arg max_angular_velocity)" />
+  </node>
 
 </launch>

@@ -4,7 +4,7 @@
 
 The Fetch has a native Cartesian twist controller (robot_controllers/CartesianTwistController).
 This node subscribes to a geometry_msgs/TwistStamped end effector velocity command (for example
-published by the Coarobo Sightline OpenXR application), clamps it to safe limits, and republishes
+published by a teleoperation application), clamps it to safe limits, and republishes
 it at a fixed rate to the Fetch arm Cartesian twist controller. When commands go stale the relay
 publishes zeros so the arm holds its pose instead of drifting (deadman behaviour).
 

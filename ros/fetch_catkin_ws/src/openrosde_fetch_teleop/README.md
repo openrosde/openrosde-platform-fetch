@@ -10,13 +10,13 @@ The `openrosde_fetch_teleop` package provides the launch files and node for end 
 
 The Fetch has a native Cartesian twist controller (`robot_controllers/CartesianTwistController`). This package provides a thin relay node that:
 
-1. Subscribes to an end effector velocity command `geometry_msgs/TwistStamped` on `fetch_ee_cmd_vel`, for example published by the Coarobo Sightline OpenXR application.
+1. Subscribes to an end effector velocity command `geometry_msgs/TwistStamped` on `fetch_ee_cmd_vel`, for example published by a teleoperation application on a mixed reality headset.
 2. Clamps the command to safe linear and angular velocity limits.
 3. Republishes it at a fixed rate (at least 20 Hz) to `arm_controller/cartesian_twist/command`, sending zeros when the input goes stale so the arm holds its pose instead of drifting.
 
 The relay starts in velocity control by default, so teleoperation is live as soon as the launch file runs and the user does not need to switch controllers.
 
-`fetch_teleop.launch` is the main entry point. It includes `fetch_teleop_sightline.launch`, which starts the relay node `fetch_cartesian_twist_control.py` and any other ROS nodes the Coarobo Sightline application needs on the Fetch platform.
+`fetch_teleop.launch` is the main entry point. It starts the relay node `fetch_cartesian_twist_control.py`, and `fetch_teleop_default.launch` of `openrosde_fetch_launch` includes it for the panes of the platform.
 
 The origin of this node is the Fetch-era `fetch_servoing` package (author: Gustavo Garcia), ported into OpenRoSDE.
 
@@ -37,15 +37,10 @@ Parameters:
 - `max_linear_velocity`: Maximum linear velocity in m/s. Keep it small for safety. Defaults to `0.05`.
 - `max_angular_velocity`: Maximum angular velocity in rad/s. Keep it small for safety. Defaults to `0.10`.
 
-## Coarobo Sightline Nodes
+## Clients
 
-Run the Coarobo Sightline teleop nodes on their own:
-
-```shell
-roslaunch openrosde_fetch_teleop fetch_teleop_sightline.launch
-```
-
-This starts `fetch_cartesian_twist_control.py`, which relays the clamped end effector twist stream to the Fetch Cartesian twist controller. It accepts the same parameters as the full stack.
+Any client that publishes `geometry_msgs/TwistStamped` on `fetch_ee_cmd_vel` drives the relay, such as a teleoperation application connected through `rosbridge` on port `9090` (`openrosde_launch:rosbridge_server_default.launch`).
+The relay forwards the commands only while they keep coming, so a client that stops publishing, or loses its connection, leaves the arm holding its pose.
 
 ## Controller Switching
 
