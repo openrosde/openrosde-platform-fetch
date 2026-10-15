@@ -114,7 +114,7 @@ The following launch files are available for the Fetch Robotics Fetch platform (
 
 `fetch_teleop_default.launch` starts the relay of `openrosde_fetch_teleop`, which moves the end effector of the Fetch Robotics Fetch from `geometry_msgs/TwistStamped` velocity commands, such as those of a teleoperation application on a mixed reality headset.
 
-- A client publishes the commands on `fetch_ee_cmd_vel`, for example through `rosbridge` on port `9090` (`openrosde_launch:rosbridge_server_default.launch`), or through the Unity ROS TCP Endpoint on port `10000` (`openrosde_launch:ros_tcp_endpoint_default.launch`), both of which the `tmux` sessions of the core start.
+- A client publishes the commands on `fetch_ee_cmd_vel`, for example through `rosbridge` on port `9090` (`openrosde_launch:rosbridge_server_default.launch`), which the `tmux` sessions of the core start.
 - The relay clamps each command to small velocity limits, streams it at 20 Hz to `/arm_controller/cartesian_twist/command`, the Cartesian twist controller that the real Fetch loads, and sends zeros once the commands stop, so that the arm holds its pose.
 - In Gazebo, the patch `patches/ros/fetch_catkin_ws/src/fetch_gazebo/0001-add-cartesian-twist-controller.patch` adds that controller to the simulated Fetch.
 - The `tmux` panes and the Terminator layouts of the platform start it in both environments.
