@@ -36,8 +36,9 @@ done
 
 ################################################################################
 
-# Run the ROS master on the loopback, and keep Gazebo from looking for models online, which the container cannot reach.
-export ROS_MASTER_URI=http://localhost:11311
+# Run the ROS master of the check on port 11411 of the loopback, apart from any master that an earlier check of the job left, and keep Gazebo from looking for models online, which the container cannot reach.
+OPENROSDE_FETCH_MASTER_PORT=11411
+export ROS_MASTER_URI=http://localhost:${OPENROSDE_FETCH_MASTER_PORT}
 export ROS_HOSTNAME=localhost
 unset ROS_IP
 export GAZEBO_MODEL_DATABASE_URI=
@@ -65,8 +66,18 @@ trap openrosde-fetch-stop-launch EXIT
 
 ################################################################################
 
+# Wait until no earlier check of the job listens on port 9090 any more, such as the 'rosbridge' of 'gitlab-ci/check-robot-model.bash' of the core, so that the client reaches the 'rosbridge' of this check.
+for OPENROSDE_FETCH_WAITED_SECONDS in $(seq 1 30); do
+  (echo > /dev/tcp/127.0.0.1/9090) > /dev/null 2>&1 || break
+  sleep 1
+done
+if (echo > /dev/tcp/127.0.0.1/9090) > /dev/null 2>&1; then
+  echo "Error: Port 9090 is still taken after 30 seconds, so this check cannot start a 'rosbridge' of its own."
+  exit 1
+fi
+
 # Start the simulation, 'rosbridge', and the relay in a process group of their own, then run the client against 'rosbridge'.
 echo "Starting the Fetch in Gazebo, 'rosbridge', and the relay, with no network..."
-setsid roslaunch "${OPENROSDE_FETCH_CI_DIR}/fetch_rosbridge_check.launch" < /dev/null > "${OPENROSDE_FETCH_LAUNCH_LOG_FILE}" 2>&1 &
+setsid roslaunch -p "${OPENROSDE_FETCH_MASTER_PORT}" "${OPENROSDE_FETCH_CI_DIR}/fetch_rosbridge_check.launch" < /dev/null > "${OPENROSDE_FETCH_LAUNCH_LOG_FILE}" 2>&1 &
 OPENROSDE_FETCH_LAUNCH_PID=$!
 timeout "$((OPENROSDE_FETCH_CHECK_TIMEOUT + 120))" python3 "${OPENROSDE_FETCH_CI_DIR}/check-rosbridge.py" --timeout "${OPENROSDE_FETCH_CHECK_TIMEOUT}"
