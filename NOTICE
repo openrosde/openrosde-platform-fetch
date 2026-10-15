@@ -1,0 +1,39 @@
+OpenRoSDE Platform Fetch (openrosde-platform-fetch)
+Copyright 2019 Coarobo GK
+
+This product includes software developed by Coarobo GK (https://coarobo.com/), licensed under the Apache License, Version 2.0, whose text is the file LICENSE.
+
+Earlier code under the MIT License
+
+The files of this repository were first published in the Software Development Environment (SDE) of Coarobo GK, https://gitlab.com/coarobo/SDE, under the MIT License, whose notice and permission text follow.
+
+MIT License
+
+Copyright (c) 2019 Coarobo GK
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Third-party software
+
+This repository pins `fetch_gazebo` of Fetch Robotics, Inc., https://github.com/fetchrobotics/fetch_gazebo, as a Git submodule that it does not redistribute, licensed under the BSD 3-Clause License, Copyright (c) 2015, Fetch Robotics Inc.
+The patch `patches/ros/fetch_catkin_ws/src/fetch_gazebo/0001-add-cartesian-twist-controller.patch` modifies `fetch_gazebo/config/default_controllers.yaml` of that submodule.
+
+The image `fetch-devel`, built from `docker/fetch-devel/Dockerfile`, installs `ros-noetic-fetch-ros` of Fetch Robotics, Inc., https://github.com/fetchrobotics/fetch_ros, whose package `fetch_description` is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License, https://creativecommons.org/licenses/by-nc-sa/4.0/, and whose other packages are licensed under the BSD or the Apache License, Version 2.0, as each `package.xml` declares.
+
+The node `ros/fetch_catkin_ws/src/openrosde_fetch_teleop/scripts/fetch_cartesian_twist_control.py` was ported into the SDE from the `fetch_servoing` package written by Gustavo Garcia.
