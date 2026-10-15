@@ -7,11 +7,11 @@
   <maintainer email="lotfi@coarobo.com">Lotfi El Hafi</maintainer>
   <author email="lotfi@coarobo.com">Lotfi El Hafi</author>
 
-  <license>MIT</license>
+  <license>Apache-2.0</license>
 
   <url type="website">https://coarobo.com/</url>
-  <url type="repository">https://gitlab.com/coarobo/SDE</url>
-  <url type="bugtracker">https://gitlab.com/coarobo/SDE/-/issues</url>
+  <url type="repository">https://gitlab.com/coarobo/openrosde/openrosde-platform-fetch</url>
+  <url type="bugtracker">https://gitlab.com/coarobo/openrosde/openrosde-platform-fetch/-/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 

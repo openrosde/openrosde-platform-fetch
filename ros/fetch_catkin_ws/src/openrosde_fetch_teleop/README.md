@@ -4,7 +4,7 @@ The `openrosde_fetch_teleop` package provides the launch files and node for end 
 
 - Maintainer: Lotfi El Hafi ([lotfi@coarobo.com](mailto:lotfi@coarobo.com)).
 - Author: Lotfi El Hafi ([lotfi@coarobo.com](mailto:lotfi@coarobo.com)).
-- License: [MIT](LICENSE).
+- License: [Apache-2.0](../../../../LICENSE).
 
 ## Overview
 
