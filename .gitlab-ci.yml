@@ -1,0 +1,34 @@
+# Documentation for configuration of GitLab CI jobs with '.gitlab-ci.yml':
+# https://docs.gitlab.com/ci/yaml/
+# https://docs.gitlab.com/ci/pipelines/downstream_pipelines/#multi-project-pipelines
+
+# This pipeline tests the Fetch platform with the core of OpenRoSDE, 'coarobo/SDE', which lists this repository in its 'gitlab-ci/extensions.repos'.
+# It triggers a pipeline of the core on 'dev' with 'OPENROSDE_CI_EXTENSION_OVERRIDE=<project>=<branch>@<commit>', which checks out this commit in place of the version that the core pins.
+# The pipeline of the core then builds or reuses the image of the platform, tests only the setups that run it, and publishes nothing.
+# This pipeline passes or fails with the pipeline of the core, which 'strategy: depend' waits for.
+
+################################################################################
+
+# Run one pipeline per change: for a merge request, or for a branch without an open merge request.
+# A tag runs no pipeline, since the core checks out the commit of a branch only.
+# https://docs.gitlab.com/ci/yaml/workflow/#switch-between-branch-pipelines-and-merge-request-pipelines
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+################################################################################
+
+# Test this commit with the core on 'dev', as the 'Extensions' guide of the core describes.
+# https://gitlab.com/coarobo/SDE/-/blob/dev/docs/extensions.md
+
+test-with-openrosde-job:
+  trigger:
+    project: coarobo/SDE
+    branch: dev
+    strategy: depend
+  variables:
+    OPENROSDE_CI_EXTENSION_OVERRIDE: "${CI_PROJECT_NAME}=${CI_COMMIT_REF_NAME}@${CI_COMMIT_SHA}"
