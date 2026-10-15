@@ -1,0 +1,24 @@
+# Python auto-generated files:
+*.pyc
+__pycache__/
+
+# macOS auto-generated files:
+*.DS_Store
+
+# 'catkin build' auto-generated files, as the '.gitignore' of the core of OpenRoSDE does not reach into this repository:
+**/ros/*_catkin_ws/CMakeLists.txt
+**/ros/*_catkin_ws/.catkin_tools/
+**/ros/*_catkin_ws/build/
+**/ros/*_catkin_ws/devel/
+**/ros/*_catkin_ws/logs/
+
+# 'catkin_make' auto-generated files:
+**/ros/*_catkin_ws/src/CMakeLists.txt
+**/ros/*_catkin_ws/.catkin_workspace
+**/ros/*_catkin_ws/install/
+
+# 'rosbag' files:
+*.bag
+
+# Terminator 'config' files injected by 'RUN-TERMINATOR-TERMINAL.bash':
+terminator/*.config.tmp
