@@ -23,11 +23,13 @@ roslaunch openrosde_fetch_launch fetch_moveit_default.launch
 roslaunch openrosde_fetch_launch fetch_rviz_default.launch
 ```
 
-To start the same Gazebo stack in the predefined Terminator layout:
+To start the same Gazebo stack in the `tmux` session of the platform:
 
 ```shell
-bash ./RUN-TERMINATOR-TERMINAL.bash #[docker-project] default-gazebo
+bash ./RUN-TMUX-SESSION.bash #[docker-project] default-gazebo
 ```
+
+The Terminator layout of earlier releases still opens with `bash ./RUN-TERMINATOR-TERMINAL.bash #[docker-project] default-gazebo`.
 
 ## Real Robot
 
@@ -39,11 +41,13 @@ roslaunch openrosde_fetch_launch fetch_mapping_default.launch
 roslaunch openrosde_fetch_launch fetch_moveit_default.launch
 ```
 
-To start the same real robot stack in the predefined Terminator layout:
+To start the same real robot stack in the `tmux` session of the platform:
 
 ```shell
-bash ./RUN-TERMINATOR-TERMINAL.bash #[docker-project] default-realworld
+bash ./RUN-TMUX-SESSION.bash #[docker-project] default-realworld
 ```
+
+The Terminator layout of earlier releases still opens with `bash ./RUN-TERMINATOR-TERMINAL.bash #[docker-project] default-realworld`.
 
 ## Launch Files
 
