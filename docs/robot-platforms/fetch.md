@@ -24,7 +24,7 @@ The Fetch Robotics Fetch platform consists of the following components:
 Clone this platform into `extensions/` of the core of OpenRoSDE, then switch to the Fetch Robotics Fetch platform:
 
 ```shell
-git clone https://gitlab.com/coarobo/openrosde/openrosde-platform-fetch.git extensions/openrosde-platform-fetch
+git clone https://github.com/openrosde/openrosde-platform-fetch.git extensions/openrosde-platform-fetch
 bash ./SWITCH-ROBOT-PLATFORM.bash fetch
 ```
 
@@ -142,7 +142,7 @@ Its Catkin workspace builds a Git submodule of Fetch Robotics, and its image ins
 | --- | --- | --- |
 | `fetch_gazebo`, `fetch_gazebo_demo` | Git submodule from [https://github.com/fetchrobotics/fetch_gazebo](https://github.com/fetchrobotics/fetch_gazebo), branch `gazebo11`, patched by `patches/` | [BSD-3-Clause](https://spdx.org/licenses/BSD-3-Clause.html) (Fetch Robotics, Inc.) |
 | `fetch_description` | `ros-noetic-fetch-ros` in the image `fetch-devel`, from [https://github.com/fetchrobotics/fetch_ros](https://github.com/fetchrobotics/fetch_ros) | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) (Fetch Robotics, Inc.) |
-| `openrosde_fetch_launch`, `openrosde_fetch_teleop`, `openrosde_fetch_behaviors` (this repository) | [https://gitlab.com/coarobo/openrosde/openrosde-platform-fetch](https://gitlab.com/coarobo/openrosde/openrosde-platform-fetch) | [Apache-2.0](../../LICENSE) (Coarobo GK) |
+| `openrosde_fetch_launch`, `openrosde_fetch_teleop`, `openrosde_fetch_behaviors` (this repository) | [https://github.com/openrosde/openrosde-platform-fetch](https://github.com/openrosde/openrosde-platform-fetch) | [Apache-2.0](../../LICENSE) (Coarobo GK) |
 
 The relay `fetch_cartesian_twist_control.py` was ported into the SDE from the `fetch_servoing` package written by Gustavo Garcia.
 
